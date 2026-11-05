@@ -1,0 +1,182 @@
+// Waybar, Grounded theme. Labels follow the design system: mono labels in
+// copper, values in ink. Original backed up in ~/backups/dotfiles-2026-11-05/
+{
+    "layer": "top",
+    "position": "top",
+    "height": 30,
+    "spacing": 0,
+
+    "modules-left": [
+        "custom/mark",
+        "sway/workspaces",
+        "sway/mode",
+        "sway/scratchpad"
+    ],
+    "modules-center": [
+        "sway/window"
+    ],
+    "modules-right": [
+        "tray",
+        "custom/layout",
+        "pulseaudio",
+        "network",
+        "bluetooth",
+        "cpu",
+        "memory",
+        "custom/temperature",
+        "battery",
+        "clock#date",
+        "clock#time",
+        "custom/power"
+    ],
+
+    "custom/mark": {
+        "format": " ",
+        "tooltip": false,
+        "on-click": "fuzzel"
+    },
+
+    "sway/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": false,
+        "format": "{name}"
+    },
+
+    "sway/mode": {
+        "format": "{}",
+        "tooltip": false
+    },
+
+    "sway/scratchpad": {
+        "format": "<span color='#e08a4c'>SCR</span> {count}",
+        "show-empty": false,
+        "tooltip": true,
+        "tooltip-format": "{app}: {title}"
+    },
+
+    "sway/window": {
+        "format": "{title}",
+        "max-length": 80,
+        "tooltip": false
+    },
+
+    "tray": {
+        "icon-size": 16,
+        "spacing": 8
+    },
+
+    // Keyboard layout flag. Refreshed instantly by the $mod+space binding
+    // (pkill -RTMIN+8 waybar); the interval is only a fallback.
+    "custom/layout": {
+        "exec": "swaymsg -t get_inputs | grep -m1 xkb_active_layout_name | sed -e 's/.*English.*/🇺🇸 EN/' -e 's/.*Spanish.*/🇪🇸 ES/'",
+        "interval": 10,
+        "signal": 8,
+        "tooltip-format": "Keyboard layout  ·  Super+Space to switch",
+        "on-click": "swaymsg input type:keyboard xkb_switch_layout next && pkill -RTMIN+8 waybar"
+    },
+
+    "pulseaudio": {
+        "format": "<span color='#e08a4c'>VOL</span> {volume}%",
+        "format-bluetooth": "<span color='#e08a4c'>VOL</span> {volume}% BT",
+        "format-muted": "<span color='#e08a4c'>VOL</span> muted",
+        "format-source": "",
+        "scroll-step": 5,
+        "max-volume": 100,
+        "on-click": "pavucontrol",
+        "on-click-right": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "tooltip-format": "{desc}"
+    },
+
+    "network": {
+        "interval": 5,
+        "format-wifi": "<span color='#e08a4c'>NET</span> {essid}",
+        "format-ethernet": "<span color='#e08a4c'>NET</span> wired",
+        "format-linked": "<span color='#e08a4c'>NET</span> no IP",
+        "format-disconnected": "<span color='#e08a4c'>NET</span> offline",
+        "tooltip-format-wifi": "{essid}  {signalStrength}%\n{ipaddr}/{cidr} on {ifname}\n↓ {bandwidthDownBytes}  ↑ {bandwidthUpBytes}",
+        "tooltip-format-ethernet": "{ipaddr}/{cidr} on {ifname}\n↓ {bandwidthDownBytes}  ↑ {bandwidthUpBytes}",
+        "tooltip-format-disconnected": "Click to connect",
+        "on-click": "alacritty --class floating-term -e impala"
+    },
+
+    "bluetooth": {
+        "format": "<span color='#e08a4c'>BT</span> on",
+        "format-off": "<span color='#e08a4c'>BT</span> off",
+        "format-disabled": "<span color='#e08a4c'>BT</span> off",
+        "format-no-controller": "<span color='#e08a4c'>BT</span> off",
+        "format-connected": "<span color='#e08a4c'>BT</span> {device_alias}",
+        "format-connected-battery": "<span color='#e08a4c'>BT</span> {device_alias} {device_battery_percentage}%",
+        "tooltip-format": "{controller_alias}\t{controller_address}",
+        "tooltip-format-connected": "{controller_alias}\n\n{device_enumerate}",
+        "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+        "on-click": "alacritty --class floating-term -e bluetui"
+    },
+
+    "cpu": {
+        "interval": 5,
+        "format": "<span color='#e08a4c'>CPU</span> {usage}%",
+        "states": { "warning": 70, "critical": 90 },
+        "on-click": "alacritty -e top"
+    },
+
+    "memory": {
+        "interval": 5,
+        "format": "<span color='#e08a4c'>MEM</span> {percentage}%",
+        "states": { "warning": 75, "critical": 90 },
+        "tooltip-format": "{used:0.1f} of {total:0.1f} GiB used\nSwap {swapUsed:0.1f} of {swapTotal:0.1f} GiB"
+    },
+
+    // CPU temperature. The script finds the sensor itself (Intel coretemp,
+    // AMD k10temp/zenpower, ARM cpu_thermal, ACPI fallback); hidden if none.
+    "custom/temperature": {
+        "exec": "~/.config/sway/scripts/cpu-temp.sh",
+        "return-type": "json",
+        "format": "<span color='#e08a4c'>TMP</span> {}"
+    },
+
+
+    "battery": {
+        "interval": 30,
+        "states": { "warning": 25, "critical": 12 },
+        "format": "<span color='#e08a4c'>BAT</span> {capacity}%",
+        "format-charging": "<span color='#e08a4c'>CHG</span> {capacity}%",
+        "format-plugged": "<span color='#e08a4c'>AC</span> {capacity}%",
+        "format-full": "<span color='#e08a4c'>AC</span> full",
+        "format-critical": "<span color='#e08a4c'>BAT</span> {capacity}% low",
+        "tooltip-format": "{timeTo}\n{power:.1f} W"
+    },
+
+    "clock#date": {
+        "interval": 60,
+        "format": "{:%a %d %b}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "month",
+            "weeks-pos": "",
+            "on-scroll": 1,
+            "format": {
+                "months": "<span color='#e9edeb'><b>{}</b></span>",
+                "days": "<span color='#96a19e'>{}</span>",
+                "weekdays": "<span color='#e08a4c'><b>{}</b></span>",
+                "today": "<span color='#b7f34d'><b><u>{}</u></b></span>"
+            }
+        },
+        "actions": {
+            "on-scroll-up": "shift_down",
+            "on-scroll-down": "shift_up"
+        }
+    },
+
+    "clock#time": {
+        "interval": 10,
+        "format": "{:%H:%M}",
+        "tooltip": false
+    },
+
+    "custom/power": {
+        "format": "⏻",
+        "tooltip": true,
+        "tooltip-format": "Power menu",
+        "on-click": "~/.config/sway/scripts/power-menu.sh"
+    }
+}

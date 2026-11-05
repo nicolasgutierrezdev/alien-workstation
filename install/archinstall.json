@@ -1,0 +1,42 @@
+{
+    "archinstall-language": "English",
+    "script": "guided",
+    "hostname": "alien-workstation",
+    "timezone": "America/Montevideo",
+    "ntp": true,
+    "kernels": ["linux", "linux-lts"],
+    "bootloader_config": {
+        "bootloader": "Systemd-boot",
+        "uki": false,
+        "removable": false
+    },
+    "locale_config": {
+        "kb_layout": "us",
+        "sys_lang": "en_US.UTF-8",
+        "sys_enc": "UTF-8",
+        "console_font": "ter-132b"
+    },
+    "network_config": {
+        "type": "iwd"
+    },
+    "app_config": {
+        "audio_config": { "audio": "pipewire" },
+        "bluetooth_config": { "enabled": true },
+        "print_service_config": { "enabled": true }
+    },
+    "profile_config": {
+        "profile": { "main": "Minimal" }
+    },
+    "swap": {
+        "enabled": true,
+        "algorithm": "zstd"
+    },
+    "pacman_config": {
+        "color": true,
+        "parallel_downloads": 5
+    },
+    "packages": ["git", "terminus-font"],
+    "custom_commands": [
+        "git clone --depth 1 https://github.com/nicolasgutierrezdev/alien-workstation.git /var/tmp/alien-workstation && bash /var/tmp/alien-workstation/install/post-install.sh; rm -rf /var/tmp/alien-workstation"
+    ]
+}

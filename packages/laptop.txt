@@ -1,0 +1,3 @@
+# Installed when a battery is present
+## Laptop
+tlp                       # battery life + charge thresholds (handles radios, so systemd-rfkill is masked)

@@ -1,0 +1,4 @@
+# pip --user packages (top-level only; dependencies come along)
+openpyxl
+python-pptx
+linkify-it-py

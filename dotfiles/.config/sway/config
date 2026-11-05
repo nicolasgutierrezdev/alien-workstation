@@ -1,0 +1,240 @@
+# ~/.config/sway/config
+# Grounded theme (Nicolás Gutiérrez design system). Read `man 5 sway`.
+# Original config backed up in ~/backups/dotfiles-2026-11-05/sway/config
+
+### Variables ##################################################################
+set $mod Mod4
+set $left h
+set $down j
+set $up k
+set $right l
+set $term alacritty
+set $files dolphin
+set $menu fuzzel
+set $scripts ~/.config/sway/scripts
+set $lock swaylock -f
+
+# Brand palette (tokens.json, dark theme)
+set $ground          #13181a
+set $surface         #1b2124
+set $surface-raised  #212829
+set $hairline        #2b3335
+set $hairline-strong #6d7c70
+set $ink             #e9edeb
+set $ink-muted       #96a19e
+set $signal          #b7f34d
+set $on-signal       #0b0f0c
+set $copper          #e08a4c
+
+### Look #######################################################################
+font pango:IBM Plex Mono Medium 9
+
+default_border pixel 2
+default_floating_border pixel 2
+titlebar_border_thickness 0
+titlebar_padding 8 3
+gaps inner 8
+gaps outer 0
+smart_gaps on
+smart_borders on
+
+#  class                  border          background      text        indicator child_border
+client.focused            $signal         $signal         $on-signal  $copper   $signal
+client.focused_inactive   $hairline       $surface-raised $ink        $hairline $hairline
+client.unfocused          $hairline       $surface        $ink-muted  $hairline $hairline
+client.urgent             $copper         $copper         $on-signal  $copper   $copper
+client.placeholder        $ground         $ground         $ink-muted  $ground   $ground
+client.background         $ground
+
+### Outputs ####################################################################
+output * bg ~/wallpapers/vader.jpg fill
+# Grounded wallpaper (swap the # to use it):
+# output * bg ~/.config/sway/assets/wallpaper.png fill
+
+# External screens: press $mod+p (extend / mirror / single screen)
+# or open `wdisplays` to arrange them by drag and drop.
+
+# Closing the lid turns the built-in panel off (detected by name, any laptop).
+bindswitch --reload --locked lid:on exec $scripts/lid.sh close
+bindswitch --reload --locked lid:off exec $scripts/lid.sh open
+
+### Input ######################################################################
+input type:touchpad {
+    tap enabled
+    click_method clickfinger
+    tap_button_map lrm
+    dwt enabled
+}
+
+# English (US) and Spanish (Latin American). Switch with $mod+space
+# or by clicking the flag in the bar.
+input type:keyboard {
+    xkb_layout us,latam
+}
+
+### Idle and lock ##############################################################
+# Lock after 10 min, screen off after 15 min, always lock before sleeping.
+exec swayidle -w \
+    timeout 600 '$lock' \
+    timeout 900 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
+    before-sleep '$lock'
+
+# Don't lock or blank while something is fullscreen (videos, presentations).
+for_window [app_id=".*"] inhibit_idle fullscreen
+for_window [class=".*"] inhibit_idle fullscreen
+
+### Window rules ###############################################################
+for_window [app_id="pavucontrol"]                     floating enable, resize set 720 480
+for_window [app_id="org.pulseaudio.pavucontrol"]      floating enable, resize set 720 480
+for_window [app_id="wdisplays"]                       floating enable
+for_window [app_id="system-config-printer"]           floating enable
+for_window [app_id="nm-connection-editor"]            floating enable
+for_window [app_id="floating-term"]                   floating enable, resize set 900 560
+for_window [app_id="swappy"]                          floating enable
+for_window [window_role="pop-up"]                     floating enable
+for_window [window_role="dialog"]                     floating enable
+for_window [window_type="dialog"]                     floating enable
+for_window [title="(?:Open|Save) (?:File|Folder|As)"] floating enable
+
+### Key bindings ###############################################################
+# Basics
+bindsym $mod+Return exec $term
+bindsym $mod+Shift+Return exec $files
+bindsym $mod+d exec $menu
+bindsym $mod+Shift+q kill
+floating_modifier $mod normal
+bindsym $mod+Shift+c reload
+
+# Session: power menu (lock / suspend / log out / reboot / shut down) and lock
+bindsym $mod+Shift+e exec $scripts/power-menu.sh
+bindsym $mod+Escape exec $lock
+
+# Displays: like Win+P on Windows (extend, mirror, one screen)
+bindsym $mod+p exec $scripts/display-mode.sh
+
+# Keyboard layout: English (US) <-> Spanish (Latin American)
+bindsym $mod+space exec swaymsg input type:keyboard xkb_switch_layout next && pkill -RTMIN+8 waybar
+
+# Clipboard history
+bindsym $mod+Shift+v exec cliphist list | fuzzel --dmenu --prompt 'Clipboard › ' | cliphist decode | wl-copy
+
+# Notifications
+bindsym $mod+n exec makoctl dismiss --all
+bindsym $mod+Shift+n exec makoctl restore
+
+# Focus
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# Move windows
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# Workspaces
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+bindsym $mod+0 workspace number 10
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+bindsym $mod+Shift+0 move container to workspace number 10
+bindsym $mod+Tab workspace back_and_forth
+bindsym $mod+Ctrl+Left workspace prev_on_output
+bindsym $mod+Ctrl+Right workspace next_on_output
+# Send the current workspace to the other screen
+bindsym $mod+Ctrl+Shift+Left move workspace to output left
+bindsym $mod+Ctrl+Shift+Right move workspace to output right
+
+# Layout
+bindsym $mod+b splith
+bindsym $mod+v splitv
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+bindsym $mod+f fullscreen
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+Ctrl+space focus mode_toggle
+bindsym $mod+a focus parent
+
+# Scratchpad
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+# Resize
+mode "resize" {
+    bindsym $left resize shrink width 10px
+    bindsym $down resize grow height 10px
+    bindsym $up resize shrink height 10px
+    bindsym $right resize grow width 10px
+    bindsym Left resize shrink width 10px
+    bindsym Down resize grow height 10px
+    bindsym Up resize shrink height 10px
+    bindsym Right resize grow width 10px
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# Media keys (work on the lock screen too)
+bindsym --locked XF86AudioMute exec wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindsym --locked XF86AudioMicMute exec wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
+bindsym --locked XF86AudioRaiseVolume exec wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+
+bindsym --locked XF86AudioLowerVolume exec wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindsym --locked XF86AudioPlay exec playerctl play-pause
+bindsym --locked XF86AudioNext exec playerctl next
+bindsym --locked XF86AudioPrev exec playerctl previous
+bindsym --locked XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
+# Laptop display key (Fn+F7 on ThinkPads) opens the display menu
+bindsym XF86Display exec $scripts/display-mode.sh
+
+# Screenshots: full screen, region, region + annotate (all copied to clipboard)
+bindsym Print exec grim - | tee ~/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png | wl-copy --type image/png
+bindsym Shift+Print exec grim -g "$(slurp)" - | tee ~/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png | wl-copy --type image/png
+bindsym $mod+Shift+s exec grim -g "$(slurp)" - | swappy -f - -o ~/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png
+
+# Wi-Fi and Bluetooth TUIs (same as clicking NET / BT in the bar)
+bindsym $mod+Shift+w exec alacritty --class floating-term -e impala
+bindsym $mod+Shift+b exec alacritty --class floating-term -e bluetui
+
+### Bar ########################################################################
+bar {
+    swaybar_command waybar
+}
+
+### Autostart ##################################################################
+exec mako
+exec /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec wl-clip-persist --clipboard regular
+exec wl-paste --watch cliphist store
+# Night light for Maldonado, Uruguay (warm screen after sunset)
+exec wlsunset -l -34.9 -L -54.9 -t 5500
+# Lets Dolphin's "Open with" see every installed app outside KDE Plasma
+exec XDG_MENU_PREFIX=arch- kbuildsycoca6
+
+include /etc/sway/config.d/*

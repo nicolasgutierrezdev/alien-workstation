@@ -1,0 +1,56 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "autoupdate": false,
+  "model": "openrouter/z-ai/glm-5.2",
+  "small_model": "openrouter/qwen/qwen3.7-plus",
+  "default_agent": "build",
+  "agent": {
+    "build": {
+      "mode": "primary",
+      "model": "openrouter/z-ai/glm-5.2",
+      "permission": {
+        "edit": "allow",
+        "bash": {
+          "*": "ask",
+          "git status*": "allow",
+          "git diff*": "allow",
+          "git log*": "allow",
+          "ls*": "allow",
+          "rg*": "allow",
+          "cat*": "allow"
+        }
+      }
+    },
+    "cheap": {
+      "mode": "primary",
+      "description": "Budget executor for routine, well-specified edits",
+      "model": "openrouter/qwen/qwen3.7-plus",
+      "permission": {
+        "edit": "allow",
+        "bash": {
+          "*": "ask"
+        }
+      }
+    },
+    "plan": {
+      "mode": "primary",
+      "model": "openrouter/z-ai/glm-5.2"
+    },
+    "general": {
+      "model": "openrouter/z-ai/glm-5.2"
+    },
+    "explore": {
+      "model": "openrouter/qwen/qwen3.7-plus"
+    },
+    "scout": {
+      "model": "openrouter/qwen/qwen3.7-plus"
+    }
+  },
+  "command": {
+    "implement": {
+      "description": "Implement a spec written by Claude Code",
+      "agent": "build",
+      "template": "Read the specification at $ARGUMENTS in full before writing any code.\n\nThis spec was already designed and approved — implement it as written. Do not redesign it, do not add features it doesn't ask for, and do not silently skip parts that are hard. Match the surrounding code's style, naming, and idiom.\n\nIf something in the spec is genuinely blocked or wrong, finish every other part in full and say plainly at the end what you left out and why.\n\nWhen the spec names tests, a build, or a type check, run them and report the actual output — do not claim success you haven't verified."
+    }
+  }
+}

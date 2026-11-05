@@ -1,0 +1,197 @@
+/* Waybar, Grounded theme.
+ * Tokens from the Nicolás Gutiérrez design system (dark theme):
+ * square corners, hairline separators, no shadows or gradients,
+ * alien green (signal) kept to the focused workspace only. */
+
+@define-color ground          #13181a;
+@define-color surface         #1b2124;
+@define-color surface-raised  #212829;
+@define-color hairline        #2b3335;
+@define-color hairline-strong #6d7c70;
+@define-color ink             #e9edeb;
+@define-color ink-muted       #96a19e;
+@define-color signal          #b7f34d;
+@define-color on-signal       #0b0f0c;
+@define-color copper          #e08a4c;
+@define-color error           #ff9b7a;
+
+* {
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+    box-shadow: none;
+    text-shadow: none;
+    font-family: "IBM Plex Mono", "Symbols Nerd Font", "Noto Color Emoji", monospace;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+window#waybar {
+    background: @ground;
+    color: @ink;
+    border-bottom: 1px solid @hairline;
+}
+
+tooltip {
+    background: @surface;
+    border: 1px solid @hairline-strong;
+}
+
+tooltip label {
+    color: @ink;
+    font-family: "IBM Plex Mono", monospace;
+    font-weight: 400;
+    padding: 4px 6px;
+}
+
+/* ---- Left ---------------------------------------------------------------- */
+
+#custom-mark {
+    min-width: 18px;
+    margin: 0 12px 0 14px;
+    background-image: url("/home/alien/.config/sway/assets/mark-small-signal-64.png");
+    background-size: 18px 18px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+#workspaces {
+    border-left: 1px solid @hairline;
+}
+
+#workspaces button {
+    padding: 0 10px;
+    color: @ink-muted;
+    background: transparent;
+    border-bottom: 2px solid transparent;
+}
+
+#workspaces button:hover {
+    background: @surface-raised;
+    color: @ink;
+}
+
+#workspaces button.visible {
+    color: @ink;
+    border-bottom: 2px solid @hairline-strong;
+}
+
+#workspaces button.focused {
+    background: @signal;
+    color: @on-signal;
+    border-bottom: 2px solid @signal;
+}
+
+#workspaces button.urgent {
+    color: @copper;
+    border-bottom: 2px solid @copper;
+}
+
+#mode {
+    background: @copper;
+    color: @on-signal;
+    padding: 0 12px;
+}
+
+#scratchpad {
+    padding: 0 12px;
+    color: @ink-muted;
+    border-left: 1px solid @hairline;
+}
+
+/* ---- Center -------------------------------------------------------------- */
+
+#window {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    color: @ink-muted;
+}
+
+/* ---- Right --------------------------------------------------------------- */
+
+#tray,
+#custom-layout,
+#pulseaudio,
+#network,
+#bluetooth,
+#cpu,
+#memory,
+#custom-temperature,
+#battery,
+#clock,
+#custom-power {
+    padding: 0 12px;
+    color: @ink;
+    border-left: 1px solid @hairline;
+}
+
+#tray {
+    border-left: none;
+}
+
+#tray > .needs-attention {
+    background: @surface-raised;
+}
+
+#custom-layout {
+    min-width: 52px;
+}
+
+#pulseaudio.muted,
+#network.disconnected,
+#network.linked,
+#bluetooth.off,
+#bluetooth.disabled,
+#bluetooth.no-controller {
+    color: @ink-muted;
+}
+
+#cpu.warning,
+#memory.warning,
+#battery.warning:not(.charging) {
+    color: @copper;
+}
+
+#cpu.critical,
+#memory.critical,
+#custom-temperature.critical,
+#battery.critical:not(.charging) {
+    color: @error;
+}
+
+#battery.charging,
+#battery.plugged {
+    color: @ink;
+}
+
+#clock.date {
+    color: @ink-muted;
+}
+
+#clock.time {
+    font-family: "IBM Plex Sans", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    font-feature-settings: "tnum";
+    padding: 0 14px;
+}
+
+#custom-power {
+    color: @ink-muted;
+    font-size: 14px;
+    padding: 0 16px 0 14px;
+}
+
+#pulseaudio:hover,
+#network:hover,
+#bluetooth:hover,
+#cpu:hover,
+#custom-layout:hover,
+#custom-power:hover {
+    background: @surface-raised;
+}
+
+#custom-power:hover {
+    color: @error;
+}

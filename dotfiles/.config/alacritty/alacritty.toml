@@ -1,0 +1,47 @@
+# Alacritty, Grounded theme
+
+[font]
+size = 12
+normal = { family = "IBM Plex Mono", style = "Regular" }
+bold = { family = "IBM Plex Mono", style = "SemiBold" }
+
+[window]
+padding = { x = 10, y = 8 }
+dynamic_padding = true
+
+[colors.primary]
+background = "#13181a"
+foreground = "#e9edeb"
+
+[colors.cursor]
+text = "#0b0f0c"
+cursor = "#b7f34d"
+
+[colors.selection]
+text = "CellForeground"
+background = "#2b3335"
+
+[colors.normal]
+black   = "#1b2124"
+red     = "#ff9b7a"
+green   = "#b7f34d"
+yellow  = "#e7d9a6"
+blue    = "#7fb4d9"
+magenta = "#d1a0c8"
+cyan    = "#8fd0c0"
+white   = "#e9edeb"
+
+[colors.bright]
+black   = "#6d7c70"
+red     = "#ffb8a0"
+green   = "#cdf97c"
+yellow  = "#f2e8c4"
+blue    = "#a3cbe8"
+magenta = "#e2bfdb"
+cyan    = "#b0e2d6"
+white   = "#ffffff"
+
+[[keyboard.bindings]]
+key = "Return"
+mods = "Shift"
+chars = "\u001B\r"

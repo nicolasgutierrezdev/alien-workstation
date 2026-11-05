@@ -1,0 +1,6 @@
+# Screen sharing in browsers / Meet / Zoom / Discord (via PipeWire).
+# When an app asks to share, pick the screen from this menu.
+[screencast]
+chooser_type=dmenu
+chooser_cmd=fuzzel --dmenu --prompt "Share screen › " --lines 4
+max_fps=30

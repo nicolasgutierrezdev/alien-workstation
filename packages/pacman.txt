@@ -1,0 +1,154 @@
+# Official-repo packages installed on every machine.
+# "## Title" lines are categories (used to build PACKAGES.md). Anything after "#" is a comment.
+# Hardware-specific packages live in hw-*.txt and are picked automatically.
+
+## Base system
+base
+base-devel
+linux
+linux-lts                 # fallback kernel (second boot entry)
+linux-firmware
+efibootmgr
+sudo
+man-db
+man-pages
+nano
+micro                     # default editor (git core.editor)
+git
+openssh
+pacman-contrib            # paccache.timer, checkupdates
+fwupd                     # firmware updates
+smartmontools
+dosfstools
+exfatprogs
+7zip
+unrar
+unzip
+jq
+terminus-font             # big console font (ter-132b)
+fastfetch
+
+## Networking & VPN
+iwd                       # Wi-Fi daemon
+impala                    # Wi-Fi TUI (Super+Shift+W, click NET in the bar)
+tailscale
+zerotier-one
+ufw                       # firewall: deny incoming, allow outgoing
+nmap
+dnsmasq                   # NAT/DHCP for libvirt VMs
+
+## Desktop: sway
+sway
+swaybg
+swayidle
+swaylock
+swayimg
+waybar
+fuzzel                    # launcher + every menu (power, displays, clipboard, screen share)
+mako                      # notifications
+ly                        # TUI login manager
+wayland
+xorg-xwayland
+xdg-desktop-portal-wlr    # screen sharing
+xdg-user-dirs
+polkit-gnome              # auth prompts
+libnotify
+libappindicator
+alacritty
+wl-clipboard
+wl-clip-persist
+cliphist                  # clipboard history (Super+Shift+V)
+grim                      # screenshots
+slurp
+swappy                    # screenshot annotation
+wlsunset                  # night light
+wdisplays                 # drag-and-drop display layout
+wl-mirror                 # mirror screens
+brightnessctl
+playerctl                 # media keys
+libinput-tools
+
+## Audio & Bluetooth
+pipewire-pulse
+wireplumber
+pavucontrol
+bluez-utils
+bluetui                   # Bluetooth TUI (Super+Shift+B, click BT in the bar)
+
+## Look & feel
+adw-gtk-theme
+breeze
+qt6-wayland
+qt6ct
+ttf-ibm-plex              # UI + mono font everywhere
+noto-fonts
+noto-fonts-emoji
+ttf-dejavu
+ttf-liberation
+ttf-nerd-fonts-symbols
+woff2-font-awesome
+
+## Files, documents & office
+dolphin
+archlinux-xdg-menu        # Dolphin "Open with" outside Plasma
+ffmpegthumbs
+kdegraphics-thumbnailers
+kimageformats
+ark
+kate
+okular
+gwenview
+libreoffice-fresh
+hunspell-en_us
+hunspell-es_uy
+glow                      # markdown in the terminal
+anki
+
+## Media & internet
+firefox
+mpv
+obs-studio
+
+## Development
+code
+opencode
+github-cli
+clang
+rustup
+nodejs
+pnpm
+python-pip
+uv
+hexedit
+docbook-xsl
+docker
+docker-buildx
+docker-compose
+
+## Virtualization
+qemu-desktop
+libvirt
+virt-manager
+edk2-ovmf
+
+## Smart cards, Uruguayan eID & OCR
+pcsclite
+ccid
+opensc
+pcsc-tools
+softhsm
+tesseract
+tesseract-data-eng
+
+## Phones
+android-tools
+heimdall                  # Samsung flashing
+
+## Printing
+cups
+system-config-printer
+
+## 3D printing, CAD & games
+prusa-slicer
+freecad
+prismlauncher

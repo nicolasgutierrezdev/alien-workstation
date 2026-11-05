@@ -1,0 +1,4 @@
+# AUR packages (installed with yay after yay-bin is bootstrapped)
+## AUR
+yay-bin
+cedula-uruguay-pkcs11     # Uruguayan eID PKCS#11 module
