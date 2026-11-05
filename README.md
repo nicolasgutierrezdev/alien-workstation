@@ -97,6 +97,7 @@ To track a new config file, add its path to `HOME_FILES` in `scripts/export.sh`.
 
 | Keys | Action |
 |---|---|
+| `Super+?` (`Super+Shift+/`) | All keybindings, searchable (`keybinds.sh`) |
 | `Super+Enter` / `Super+Shift+Enter` | Terminal (Alacritty) / Files (Dolphin) |
 | `Super+D` | Launcher (fuzzel) |
 | `Super+Shift+W` | Wi-Fi (impala) |

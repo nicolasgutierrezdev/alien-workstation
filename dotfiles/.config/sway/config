@@ -122,6 +122,9 @@ bindsym $mod+Shift+v exec cliphist list | fuzzel --dmenu --prompt 'Clipboard ›
 bindsym $mod+n exec makoctl dismiss --all
 bindsym $mod+Shift+n exec makoctl restore
 
+# Keybinding cheat sheet (Super+?)
+bindsym --to-code $mod+Shift+slash exec $scripts/keybinds.sh
+
 # Focus
 bindsym $mod+$left focus left
 bindsym $mod+$down focus down
