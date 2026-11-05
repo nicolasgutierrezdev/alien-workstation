@@ -1,0 +1,5 @@
+# Installed when the CPU/GPU is Intel
+## Intel hardware
+intel-ucode
+intel-media-driver        # GPU video encode/decode (OBS, mpv, Firefox)
+vulkan-intel

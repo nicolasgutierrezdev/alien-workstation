@@ -1,0 +1,18 @@
+[Unit]
+Description=Show journal messages on the boot splash
+DefaultDependencies=no
+ConditionKernelCommandLine=splash
+ConditionPathExists=/run/plymouth/pid
+After=systemd-journald.service plymouth-start.service
+# No Conflicts=plymouth-quit.service here: it lands in the same boot transaction as
+# this unit, so systemd drops plymouth-quit's start job, the splash never quits and
+# ly (After=plymouth-quit-wait.service) never starts. splash-journal exits on its own
+# once the splash is gone.
+Conflicts=shutdown.target
+Before=shutdown.target
+
+[Service]
+ExecStart=/usr/local/bin/splash-journal
+
+[Install]
+WantedBy=sysinit.target

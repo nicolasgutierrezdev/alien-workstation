@@ -1,0 +1,4 @@
+# Installed when the CPU/GPU is AMD
+## AMD hardware
+amd-ucode
+vulkan-radeon

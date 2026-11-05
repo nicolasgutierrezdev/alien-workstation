@@ -1,0 +1,32 @@
+# Lock screen, Grounded theme
+image=~/.config/sway/assets/wallpaper.png
+scaling=fill
+font=IBM Plex Mono
+font-size=14
+indicator-radius=72
+indicator-thickness=6
+show-failed-attempts
+ignore-empty-password
+
+inside-color=13181aee
+inside-clear-color=13181aee
+inside-ver-color=13181aee
+inside-wrong-color=13181aee
+ring-color=2b3335
+ring-clear-color=96a19e
+ring-ver-color=b7f34d
+ring-wrong-color=ff9b7a
+key-hl-color=b7f34d
+bs-hl-color=e08a4c
+line-color=00000000
+line-clear-color=00000000
+line-ver-color=00000000
+line-wrong-color=00000000
+separator-color=00000000
+text-color=e9edeb
+text-clear-color=96a19e
+text-ver-color=b7f34d
+text-wrong-color=ff9b7a
+layout-bg-color=13181a
+layout-border-color=2b3335
+layout-text-color=e9edeb

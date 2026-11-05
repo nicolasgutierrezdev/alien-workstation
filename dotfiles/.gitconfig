@@ -1,0 +1,13 @@
+[http]
+	sslBackend = openssl
+	sslVerify = true
+[user]
+	signingkey = FC166CA442735B8B
+	email = ngutierreztassano@gmail.com
+	name = Nicolas Gutierrez
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg
+[core]
+	editor = micro

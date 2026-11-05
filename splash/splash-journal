@@ -1,0 +1,62 @@
+#!/usr/bin/env bash
+# Send each new journal entry of this boot to the Plymouth splash, which shows the
+# last few in its panel with a status tag, like systemd's console: [  OK  ] Started …
+# Run by splash-journal.service. It exits as soon as the splash quits (systemd then
+# stops the journal pipeline left in the service).
+#   splash-journal          follow the journal until the splash quits
+#   splash-journal --send   format and send journal JSON from stdin (used by preview.sh)
+#
+# Each message is "<kind>|<seconds since boot>|<text>"; grounded.script splits it and
+# draws the tag for <kind>: ok, fail, time, dep, err, warn or info.
+
+# Keep systemd's job results (Started/Finished/Reached target/Failed …) and other
+# messages, tagged by priority. Drop the noise systemd itself keeps off the console:
+# "Starting …", "Stopping …", "Deactivated successfully", "Consumed … CPU time", and
+# units skipped by their conditions.
+FORMAT='
+def text: .MESSAGE | if type == "string" then split("\n")[0] | gsub("[\t\r]"; " ") else "" end;
+def secs: (.__MONOTONIC_TIMESTAMP | tonumber) as $us
+    | ("       " + ($us / 1000000 | floor | tostring) + "."
+        + ("00" + (($us / 1000 | floor) % 1000 | tostring))[-3:])[-8:];
+fromjson?
+| select(text != "")
+| select(.MESSAGE_ID | IN(
+    "7d4958e842da4a758f6c1cdc7b36dcc5", "de5b426a63be47a7b6ac3eaac82e2f6f",
+    "7ad2d189f7e94e70a38c781354912448", "ae8f7b866b0347b9af31fe1c80b127c0") | not)
+| select(.JOB_RESULT == "done" and (text | test(" skipped, ")) | not)
+| (.PRIORITY // "6" | tonumber) as $prio
+| (if   .JOB_RESULT == "done"       then "ok"
+   elif .JOB_RESULT == "failed"     then "fail"
+   elif .JOB_RESULT == "timeout"    then "time"
+   elif .JOB_RESULT == "dependency" then "dep"
+   elif $prio <= 3                  then "err"
+   elif $prio == 4                  then "warn"
+   else "info" end) as $kind
+| (if .JOB_RESULT then text else "\(.SYSLOG_IDENTIFIER // "?"): \(text)" end) as $line
+| "\($kind)|\(secs)|\($line)"
+'
+
+# Plymouth rejects messages over 255 bytes (the client aborts), so shorten long
+# lines without cutting a UTF-8 character in half. The panel clips far shorter anyway.
+send() {
+    local line=${1:0:200} bytes
+    while bytes=$(LC_ALL=C; echo "${#line}") && [ "$bytes" -gt 255 ]; do
+        line=${line%?}
+    done
+    plymouth display-message --text="$line"
+}
+
+forward() {
+    jq --unbuffered -rR "$FORMAT" |
+    while IFS= read -r line; do
+        send "$line" || exit 0
+    done
+}
+
+if [ "${1:-}" = --send ]; then
+    forward
+    exit
+fi
+
+journalctl --boot --follow --lines=30 --priority=info --output=json | forward &
+plymouth --wait
