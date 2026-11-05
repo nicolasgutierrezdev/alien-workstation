@@ -45,7 +45,7 @@ def lines_of(path):
 
 
 def main():
-    files = ["pacman.txt", "hw-intel.txt", "hw-amd.txt", "laptop.txt", "aur.txt"]
+    files = ["pacman.txt", "hw-intel.txt", "hw-amd.txt", "laptop.txt"]
     groups = {}
     for f in files:
         for cat, name, note in parse(PKG / f):

@@ -80,23 +80,7 @@ if ! grep -rqs '^%wheel ALL=(ALL:ALL) ALL' /etc/sudoers /etc/sudoers.d; then
     chmod 440 /etc/sudoers.d/10-wheel
 fi
 
-# --- AUR (yay) ----------------------------------------------------------------
-# makepkg refuses to run as root, so build as the user with temporary passwordless sudo.
-log "Installing AUR packages"
-SUDOERS_TMP=/etc/sudoers.d/99-alien-workstation-install
-echo "$USER_NAME ALL=(ALL:ALL) NOPASSWD: ALL" > "$SUDOERS_TMP"
-chmod 440 "$SUDOERS_TMP"
-trap 'rm -f "$SUDOERS_TMP"' EXIT
-
 as_user() { sudo -u "$USER_NAME" -H env HOME="$USER_HOME" "$@"; }
-if ! command -v yay >/dev/null; then
-    build=$(as_user mktemp -d)
-    as_user git clone -q https://aur.archlinux.org/yay-bin.git "$build/yay-bin"
-    (cd "$build/yay-bin" && as_user makepkg -si --noconfirm)
-    rm -rf "$build"
-fi
-AUR=$(pkgs "$REPO/packages/aur.txt" | grep -vx 'yay-bin' || true)
-[ -n "$AUR" ] && as_user yay -S --needed --noconfirm --answerclean None --answerdiff None $AUR
 
 # --- Repo copy in the user's home ---------------------------------------------
 DEST="$USER_HOME/workspace/alien-workstation"

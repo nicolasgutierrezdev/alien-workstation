@@ -41,7 +41,7 @@ Bluetooth, printing, zram swap). You only pick:
 
 Then press **Install**. When the base system is in, archinstall runs
 [`install/post-install.sh`](install/post-install.sh) inside it. That script installs all
-packages and the AUR ones, copies the system files, enables services, adds you to
+packages, copies the system files, enables services, adds you to
 `docker`/`libvirt`, and deploys the dotfiles. Reboot, log in at the **ly** prompt, and choose **sway**.
 
 > No local clone? archinstall can also use the preset directly from GitHub:

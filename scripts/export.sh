@@ -44,6 +44,7 @@ HOME_FILES=(
 
 # System files (absolute paths) that differ from a stock Arch install.
 SYSTEM_FILES=(
+    /etc/vconsole.conf
     /etc/modprobe.d/blacklist-nfc.conf
     /etc/udev/rules.d/51-android.rules
     /etc/udev/rules.d/60-heimdall.rules
@@ -75,11 +76,11 @@ strip() { sed 's/#.*//; s/[[:space:]]*$//' "$@" | grep -v '^$' | sort -u; }
 listed=$(strip "$REPO"/packages/pacman.txt "$REPO"/packages/hw-*.txt "$REPO"/packages/laptop.txt)
 new=$(comm -23 <(pacman -Qqen | sort) <(echo "$listed"))
 gone=$(comm -13 <(pacman -Qqen | sort) <(strip "$REPO"/packages/pacman.txt))
-aur_new=$(comm -23 <(pacman -Qqem | grep -v -- '-debug$' | sed 's/^yay$/yay-bin/' | sort) <(strip "$REPO"/packages/aur.txt))
+foreign=$(pacman -Qqem || true)
 [ -n "$new" ]     && printf '   installed, not in lists (add to packages/pacman.txt):\n%s\n' "$(sed 's/^/     /' <<<"$new")"
 [ -n "$gone" ]    && printf '   in lists, not installed here:\n%s\n' "$(sed 's/^/     /' <<<"$gone")"
-[ -n "$aur_new" ] && printf '   AUR, not in packages/aur.txt:\n%s\n' "$(sed 's/^/     /' <<<"$aur_new")"
-[ -z "$new$gone$aur_new" ] && echo "   in sync"
+[ -n "$foreign" ] && printf '   AUR/foreign (the installer does not install these):\n%s\n' "$(sed 's/^/     /' <<<"$foreign")"
+[ -z "$new$gone$foreign" ] && echo "   in sync"
 
 if command -v code >/dev/null; then code --list-extensions > "$REPO/packages/vscode-extensions.txt"; fi
 

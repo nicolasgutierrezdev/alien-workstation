@@ -2,3 +2,4 @@
 openpyxl
 python-pptx
 linkify-it-py
+textual

@@ -3,7 +3,7 @@
 Everything installed on the workstation, grouped by purpose.
 Generated from `packages/*.txt` by `scripts/gen-packages-md.py`; edit the `.txt` files, not this one.
 
-**134 system packages** · hardware packages are chosen automatically at install time.
+**132 system packages** · hardware packages are chosen automatically at install time.
 
 ## Contents
 
@@ -23,7 +23,6 @@ Generated from `packages/*.txt` by `scripts/gen-packages-md.py`; edit the `.txt`
 - [Intel hardware](#intel-hardware) (3)
 - [AMD hardware](#amd-hardware) (2)
 - [Laptop](#laptop) (1)
-- [AUR](#aur) (2)
 - [User-level tools](#user-level-tools)
 
 ## Base system
@@ -238,20 +237,13 @@ Generated from `packages/*.txt` by `scripts/gen-packages-md.py`; edit the `.txt`
 |---|---|
 | `tlp` | Linux Advanced Power Management — *battery life + charge thresholds (handles radios, so systemd-rfkill is masked)* |
 
-## AUR
-
-| Package | What it is |
-|---|---|
-| `yay-bin` |  |
-| `cedula-uruguay-pkcs11` | PKCS#11 middleware for the Uruguayan electronic ID card (cédula) — *Uruguayan eID PKCS#11 module* |
-
 ## User-level tools
 
 Installed per user by `install/user-setup.sh`, outside pacman.
 
 | Kind | Packages |
 |---|---|
-| pip `--user` | `openpyxl`, `python-pptx`, `linkify-it-py` |
+| pip `--user` | `openpyxl`, `python-pptx`, `linkify-it-py`, `textual` |
 | `uv tool` | `firmauy`, `cedulauy-mrz-scan` |
 | VS Code extensions | `anthropic.claude-code`, `ms-python.debugpy`, `ms-python.python`, `ms-python.vscode-python-envs` |
 | Rust | `rustup` stable toolchain |
