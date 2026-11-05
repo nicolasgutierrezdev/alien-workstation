@@ -26,6 +26,7 @@ unrar
 unzip
 jq
 terminus-font             # big console font (ter-132b)
+plymouth                  # boot splash (splash/, Grounded theme)
 fastfetch
 
 ## Networking & VPN

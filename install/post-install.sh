@@ -112,7 +112,11 @@ fi
 log "Running user setup as $USER_NAME"
 as_user bash "$REPO/install/user-setup.sh"
 
-# Console font (ter-132b) is only in the initramfs once terminus-font exists.
+# --- Boot splash --------------------------------------------------------------
+log "Setting up the boot splash (Plymouth, Grounded theme)"
+SPLASH_SKIP_INITRAMFS=1 bash "$REPO/splash/install.sh" || warn "splash setup failed; run 'sudo ./splash/install.sh'"
+
+# The console font (ter-132b) and the splash are only in the initramfs after this.
 log "Rebuilding initramfs"
 mkinitcpio -P >/dev/null 2>&1 || warn "mkinitcpio reported problems; check 'mkinitcpio -P'"
 

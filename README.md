@@ -11,6 +11,7 @@ rebuilds the whole setup on a new machine. The desktop is **sway** + **waybar** 
 | [`dotfiles/`](dotfiles) | Config files and scripts, laid out exactly like `$HOME` |
 | [`system/`](system) | Files under `/etc` that differ from stock Arch |
 | [`install/`](install) | The installer: archinstall preset + setup scripts |
+| [`splash/`](splash) | Boot splash: Plymouth theme with the alien mark and the journal |
 | [`scripts/`](scripts) | Maintenance: export the live setup back into the repo |
 
 ---
@@ -76,6 +77,27 @@ Every script can be re-run safely. Before a dotfile is replaced, the old copy is
 - Copy `~/.ssh` and `~/.gnupg` from a backup. `.gitconfig` signs commits with GPG key `FC166CA442735B8B`.
 - `gh auth login`, then sign in to Firefox and Claude Code (`claude`)
 - `~/.local/bin/postal` (`whatsapp`) is a standalone binary and isn't tracked here
+
+---
+
+## Boot splash
+
+Plymouth shows the Grounded alien mark at the center of the screen, with its three ground bars
+lighting up one after another while the system boots. Below it, a borderless panel shows the
+last six journal lines with a status tag like systemd's console (`[  OK  ]` in green, `WARN` and
+`DEPEND` in copper, `FAILED`/`ERROR` in red); `splash-journal.service` sends them with
+`plymouth display-message`.
+The splash stays up until the ly login appears.
+
+```sh
+sudo ./splash/install.sh       # install or update just the splash (post-install.sh runs it too)
+sudo ./splash/preview.sh       # try it without rebooting; run from a text console (Ctrl+Alt+F3)
+./splash/build.sh              # re-render theme/*.png after replacing splash/mark-signal.svg
+```
+
+- During boot, press `Esc` to switch between the splash and the plain text log.
+- Only the main boot entry gets `quiet splash`. The **LTS** entry stays verbose, as a fallback.
+- To turn the splash off, remove `splash` from `options` in `/boot/loader/entries/arch.conf`.
 
 ---
 

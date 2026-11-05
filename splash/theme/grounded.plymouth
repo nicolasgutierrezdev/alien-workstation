@@ -1,0 +1,10 @@
+[Plymouth Theme]
+Name=Grounded
+Description=The Grounded alien mark with its ground bars charging, and the journal scrolling below.
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/grounded
+ScriptFile=/usr/share/plymouth/themes/grounded/grounded.script
+# The mkinitcpio hook copies this font into the initramfs as Plymouth-monospace.ttf.
+MonospaceFont=IBM Plex Mono 10

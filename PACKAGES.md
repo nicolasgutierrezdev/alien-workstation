@@ -3,11 +3,11 @@
 Everything installed on the workstation, grouped by purpose.
 Generated from `packages/*.txt` by `scripts/gen-packages-md.py`; edit the `.txt` files, not this one.
 
-**133 system packages** · hardware packages are chosen automatically at install time.
+**134 system packages** · hardware packages are chosen automatically at install time.
 
 ## Contents
 
-- [Base system](#base-system) (24)
+- [Base system](#base-system) (25)
 - [Networking & VPN](#networking--vpn) (7)
 - [Desktop: sway](#desktop-sway) (29)
 - [Audio & Bluetooth](#audio--bluetooth) (5)
@@ -53,6 +53,7 @@ Generated from `packages/*.txt` by `scripts/gen-packages-md.py`; edit the `.txt`
 | `unzip` | For extracting and viewing files in .zip archives |
 | `jq` | Command-line JSON processor |
 | `terminus-font` | Monospace bitmap font (for X11 and console) — *big console font (ter-132b)* |
+| `plymouth` | Graphical boot splash screen — *boot splash (splash/, Grounded theme)* |
 | `fastfetch` | A feature-rich and performance oriented neofetch like system information tool |
 
 ## Networking & VPN
