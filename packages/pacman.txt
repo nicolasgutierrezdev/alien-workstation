@@ -148,6 +148,8 @@ heimdall                  # Samsung flashing
 ## Printing
 cups
 system-config-printer
+avahi                     # finds network printers (mDNS/DNS-SD)
+nss-mdns                  # resolves *.local names, so CUPS can reach them
 
 ## 3D printing, CAD & games
 prusa-slicer

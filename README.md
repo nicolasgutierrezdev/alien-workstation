@@ -65,6 +65,9 @@ Every script can be re-run safely. Before a dotfile is replaced, the old copy is
 - **Laptop** (battery present): gets `tlp`, and `systemd-rfkill` is masked.
 - **Username**: configs that mention `/home/alien` are rewritten to the new user's home.
 
+- **Printers**: Wi-Fi printers on the network are found automatically (avahi + `nss-mdns`) and show
+  up in print dialogs and `system-config-printer`. Most work driverless (IPP Everywhere), no vendor driver.
+
 - **Screens** (detected when used, not at install): the built-in panel is whichever output is named
   `eDP-*`, `LVDS-*` or `DSI-*`. Closing the lid turns it off (`lid.sh`), and `Super+P`
   (`display-mode.sh`) works on laptops and two-monitor desktops alike.

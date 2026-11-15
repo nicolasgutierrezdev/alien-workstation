@@ -52,6 +52,12 @@ done
 if [ ! -f /etc/iwd/main.conf ]; then
     install -Dm644 /dev/stdin /etc/iwd/main.conf <<<$'[General]\nEnableNetworkConfiguration=true'
 fi
+# Network printers: resolve *.local hostnames via mDNS (nss-mdns), so CUPS can reach
+# printers that avahi discovers. Inserted before 'resolve', once.
+if ! grep -q '^hosts:.*mdns' /etc/nsswitch.conf; then
+    sed -i '/^hosts:/ s/ resolve/ mdns_minimal [NOTFOUND=return] resolve/' /etc/nsswitch.conf
+    grep -q '^hosts:.*mdns_minimal' /etc/nsswitch.conf || warn "could not add mdns_minimal to /etc/nsswitch.conf"
+fi
 # Firewall: deny incoming, allow outgoing (ufw defaults), on at boot.
 sed -i 's/^ENABLED=.*/ENABLED=yes/' /etc/ufw/ufw.conf
 $IN_CHROOT || ufw --force enable >/dev/null || warn "ufw enable failed"
@@ -60,7 +66,7 @@ $IN_CHROOT || ufw --force enable >/dev/null || warn "ufw enable failed"
 log "Enabling services"
 SERVICES=(
     iwd.service bluetooth.service ufw.service docker.socket libvirtd.socket
-    tailscaled.service cups.socket pcscd.socket systemd-timesyncd.service
+    tailscaled.service cups.socket avahi-daemon.service pcscd.socket systemd-timesyncd.service
     fstrim.timer paccache.timer ly@tty2.service
 )
 $IS_LAPTOP && SERVICES+=(tlp.service)

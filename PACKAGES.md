@@ -3,7 +3,7 @@
 Everything installed on the workstation, grouped by purpose.
 Generated from `packages/*.txt` by `scripts/gen-packages-md.py`; edit the `.txt` files, not this one.
 
-**132 system packages** · hardware packages are chosen automatically at install time.
+**134 system packages** · hardware packages are chosen automatically at install time.
 
 ## Contents
 
@@ -18,7 +18,7 @@ Generated from `packages/*.txt` by `scripts/gen-packages-md.py`; edit the `.txt`
 - [Virtualization](#virtualization) (4)
 - [Smart cards, Uruguayan eID & OCR](#smart-cards-uruguayan-eid--ocr) (7)
 - [Phones](#phones) (2)
-- [Printing](#printing) (2)
+- [Printing](#printing) (4)
 - [3D printing, CAD & games](#3d-printing-cad--games) (3)
 - [Intel hardware](#intel-hardware) (3)
 - [AMD hardware](#amd-hardware) (2)
@@ -207,6 +207,8 @@ Generated from `packages/*.txt` by `scripts/gen-packages-md.py`; edit the `.txt`
 |---|---|
 | `cups` | OpenPrinting CUPS - daemon package |
 | `system-config-printer` | A CUPS printer configuration tool and status applet |
+| `avahi` | Service Discovery for Linux using mDNS/DNS-SD (compatible with Bonjour) — *finds network printers (mDNS/DNS-SD)* |
+| `nss-mdns` | glibc plugin providing host name resolution via mDNS — *resolves *.local names, so CUPS can reach them* |
 
 ## 3D printing, CAD & games
 
