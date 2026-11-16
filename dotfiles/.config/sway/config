@@ -216,9 +216,8 @@ bindsym --locked XF86MonBrightnessUp exec brightnessctl set 5%+
 # Laptop display key (Fn+F7 on ThinkPads) opens the display menu
 bindsym XF86Display exec $scripts/display-mode.sh
 
-# Screenshots: full screen, region, region + annotate (all copied to clipboard)
+# Screenshots: full screen (saved + copied), region + annotate (save/copy from swappy)
 bindsym Print exec grim - | tee ~/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png | wl-copy --type image/png
-bindsym Shift+Print exec grim -g "$(slurp)" - | tee ~/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png | wl-copy --type image/png
 bindsym $mod+Shift+s exec grim -g "$(slurp)" - | swappy -f - -o ~/screenshots/$(date +%Y-%m-%d_%H-%M-%S).png
 
 # Wi-Fi and Bluetooth TUIs (same as clicking NET / BT in the bar)

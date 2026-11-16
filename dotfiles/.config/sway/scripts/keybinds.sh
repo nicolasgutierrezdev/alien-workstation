@@ -83,7 +83,6 @@ function describe(c,   w) {
     if (c ~ /lid\.sh close/)          return "Turn off built-in screen"
     if (c ~ /lid\.sh open/)           return "Turn on built-in screen"
     if (c ~ /swappy/)                 return "Screenshot region + annotate"
-    if (c ~ /grim -g/)                return "Screenshot region"
     if (c ~ /grim/)                   return "Screenshot full screen"
     if (c ~ /impala/)                 return "Wi-Fi"
     if (c ~ /bluetui/)                return "Bluetooth"

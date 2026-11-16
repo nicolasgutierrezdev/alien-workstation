@@ -130,7 +130,7 @@ To track a new config file, add its path to `HOME_FILES` in `scripts/export.sh`.
 | `Super+P` | Displays: extend / mirror / single screen |
 | `Super+Space` | Keyboard layout US ⇄ Latin American |
 | `Super+Shift+V` | Clipboard history |
-| `Print` / `Shift+Print` / `Super+Shift+S` | Screenshot: full / region / region + annotate |
+| `Print` / `Super+Shift+S` | Screenshot: full screen / region + annotate |
 | `Super+N` / `Super+Shift+N` | Dismiss / restore notifications |
 | `Super+Escape` | Lock |
 | `Super+Shift+E` | Power menu |
